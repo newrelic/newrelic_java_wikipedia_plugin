@@ -21,6 +21,12 @@ import com.newrelic.metrics.publish.processors.Processor;
  * @author jstenhouse
  */
 public class WikipediaAgent extends Agent {
+	
+	private static final String GUID = "com.newrelic.examples.wikipedia";
+	private static final String VERSION = "1.0.3";
+	
+	private static final String HTTP = "http";
+	private static final String WIKIPEDIA_URL = "/w/api.php?action=query&format=json&meta=siteinfo&siprop=statistics";
 
 	private String name;
 	private URL url;
@@ -34,10 +40,10 @@ public class WikipediaAgent extends Agent {
 	 * @throws ConfigurationException if URL for Wikipedia's metric service could not be built correctly from provided host
 	 */
 	public WikipediaAgent(String name, String host) throws ConfigurationException {
-		super("com.newrelic.examples.wikipedia", "1.0.3");
+		super(GUID, VERSION);
 		try {
 			this.name = name;
-			this.url = new URL("http", host, "/w/api.php?action=query&format=json&meta=siteinfo&siprop=statistics");
+			this.url = new URL(HTTP, host, WIKIPEDIA_URL);
 			this.articleCreationRate = new EpochCounter();
 		} catch (MalformedURLException e) {
 			throw new ConfigurationException("Wikipedia metric URL could not be parsed", e);
