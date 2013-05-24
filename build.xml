@@ -7,7 +7,7 @@
 	<property name="distdir" location="dist" />
 	<property name="version" value="1.0.3" />
 	<property name="jarfile" value="${distdir}/newrelic_wikipedia_plugin-${version}.jar" />
-    <property name="tarfile" value="${distdir}/newrelic_wikipedia_plugin-${version}.tar.gz"/>
+	<property name="tarfile" value="${distdir}/newrelic_wikipedia_plugin-${version}.tar.gz" />
 
 	<property name="sdk.jar" value="${libdir}/metrics_publish-beta.jar" />
 

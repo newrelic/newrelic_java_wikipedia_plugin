@@ -16,7 +16,7 @@ A few simple steps:
 	
 	1. Extract the downloaded plugin archive and open the config folder.
 	2. From the config directory, copy the file template_newrelic.properties to newrelic.properties.
-	2. Edit the newrelic.properties file and replace the string YOUR_LICENSE_KEY_HERE with the license key from your New Relic account.
+	3. Edit the newrelic.properties file and replace the string YOUR_LICENSE_KEY_HERE with the license key from your New Relic account.
 
 Running the Agent
 -----------------
