@@ -61,6 +61,8 @@ public class WikipediaAgent extends Agent {
 		if (numArticles != null) {
 			 reportMetric("Articles/Created", "articles/sec", articleCreationRate.process(numArticles).floatValue());
 			 reportMetric("Articles/Count", "articles", numArticles);
+		} else {
+			//TODO: log numArticles when null
 		}
 	}
 
@@ -86,22 +88,22 @@ public class WikipediaAgent extends Agent {
 	 */
 	private JSONObject getJSONResponse() {
 		Object response = null;
-		InputStream is = null;
+		InputStream inputStream = null;
 		HttpURLConnection connection = null;
 		try {
 			connection = (HttpURLConnection) url.openConnection();
 			connection.addRequestProperty("Accept", "application/json");
-			is = connection.getInputStream();
-			response = JSONValue.parse(new InputStreamReader(is));
+			inputStream = connection.getInputStream();
+			response = JSONValue.parse(new InputStreamReader(inputStream));
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if(is != null) {
+			if (inputStream != null) {
 				try {
-					is.close();
+					inputStream.close();
 				} catch (IOException e) {}
 			}
-			if(connection != null) {
+			if (connection != null) {
 				connection.disconnect();
 			}
 		}
