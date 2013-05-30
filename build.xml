@@ -5,11 +5,11 @@
 	<property name="libdir" value="lib" />
 	<property name="confdir" value="config" />
 	<property name="distdir" location="dist" />
-	<property name="version" value="1.0.3" />
+	<property name="version" value="1.0.4" />
 	<property name="jarfile" value="${distdir}/newrelic_wikipedia_plugin-${version}.jar" />
 	<property name="tarfile" value="${distdir}/newrelic_wikipedia_plugin-${version}.tar.gz" />
 
-	<property name="sdk.jar" value="${libdir}/metrics_publish-beta.jar" />
+	<property name="sdk.jar" value="${libdir}/metrics_publish-0.2.2.jar" />
 
 	<path id="classpath">
 		<pathelement location="${sdk.jar}" />
