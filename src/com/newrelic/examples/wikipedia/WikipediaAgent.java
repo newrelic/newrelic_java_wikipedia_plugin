@@ -23,7 +23,7 @@ import com.newrelic.metrics.publish.processors.Processor;
 public class WikipediaAgent extends Agent {
 	
 	private static final String GUID = "com.newrelic.examples.wikipedia";
-	private static final String VERSION = "1.0.5";
+	private static final String VERSION = "1.0.6";
 	
 	private static final String HTTP = "http";
 	private static final String WIKIPEDIA_URL = "/w/api.php?action=query&format=json&meta=siteinfo&siprop=statistics";
@@ -59,7 +59,7 @@ public class WikipediaAgent extends Agent {
 	public void pollCycle() {
 		Integer numArticles = getNumArticles();
 		if (numArticles != null) {
-			 reportMetric("Articles/Created", "articles/sec", articleCreationRate.process(numArticles).floatValue());
+			 reportMetric("Articles/Created", "articles/sec", articleCreationRate.process(numArticles));
 			 reportMetric("Articles/Count", "articles", numArticles);
 		} else {
 			//TODO: log numArticles when null
