@@ -16,98 +16,98 @@ import com.newrelic.metrics.publish.processors.EpochCounter;
 import com.newrelic.metrics.publish.processors.Processor;
 
 /**
- * An agent for Wikipedia. 
+ * An agent for Wikipedia.
  * This agent will log both Articles Created and Article Count metrics.
  * @author jstenhouse
  */
 public class WikipediaAgent extends Agent {
-	
-	private static final String GUID = "com.newrelic.examples.wikipedia";
-	private static final String VERSION = "1.0.7";
-	
-	private static final String HTTP = "http";
-	private static final String WIKIPEDIA_URL = "/w/api.php?action=query&format=json&meta=siteinfo&siprop=statistics";
 
-	private String name;
-	private URL url;
-	private Processor articleCreationRate;
+    private static final String GUID = "com.newrelic.examples.wikipedia";
+    private static final String VERSION = "1.0.8";
 
-	/**
-	 * Constructor for Wikipedia Agent.
-	 * Uses name for Component Human Label and host for building Wikipedia's Metric service.
-	 * @param name
-	 * @param host
-	 * @throws ConfigurationException if URL for Wikipedia's metric service could not be built correctly from provided host
-	 */
-	public WikipediaAgent(String name, String host) throws ConfigurationException {
-		super(GUID, VERSION);
-		try {
-			this.name = name;
-			this.url = new URL(HTTP, host, WIKIPEDIA_URL);
-			this.articleCreationRate = new EpochCounter();
-		} catch (MalformedURLException e) {
-			throw new ConfigurationException("Wikipedia metric URL could not be parsed", e);
-		}
-	}
+    private static final String HTTP = "http";
+    private static final String WIKIPEDIA_URL = "/w/api.php?action=query&format=json&meta=siteinfo&siprop=statistics";
 
-	@Override
-	public String getComponentHumanLabel() {
-		return name;
-	}
+    private String name;
+    private URL url;
+    private Processor articleCreationRate;
 
-	@Override
-	public void pollCycle() {
-		Integer numArticles = getNumArticles();
-		if (numArticles != null) {
-			 reportMetric("Articles/Created", "articles/sec", articleCreationRate.process(numArticles));
-			 reportMetric("Articles/Count", "articles", numArticles);
-		} else {
-			//TODO: log numArticles when null
-		}
-	}
+    /**
+     * Constructor for Wikipedia Agent.
+     * Uses name for Component Human Label and host for building Wikipedia's Metric service.
+     * @param name
+     * @param host
+     * @throws ConfigurationException if URL for Wikipedia's metric service could not be built correctly from provided host
+     */
+    public WikipediaAgent(String name, String host) throws ConfigurationException {
+        super(GUID, VERSION);
+        try {
+            this.name = name;
+            this.url = new URL(HTTP, host, WIKIPEDIA_URL);
+            this.articleCreationRate = new EpochCounter();
+        } catch (MalformedURLException e) {
+            throw new ConfigurationException("Wikipedia metric URL could not be parsed", e);
+        }
+    }
 
-	/**
-	 * Get Number of Articles from Wikipedia
-	 * @return Integer the number of articles
-	 */
-	private Integer getNumArticles() {
-		JSONObject jsonObj = getJSONResponse();
-		if (jsonObj != null) {
-			JSONObject query = (JSONObject) jsonObj.get("query");
-			JSONObject statistics = (JSONObject) query.get("statistics");
-			Long numArticles = (Long) statistics.get("articles");
-			return numArticles.intValue();
-		} else {
-			return null;
-		}
-	}
+    @Override
+    public String getComponentHumanLabel() {
+        return name;
+    }
 
-	/**
-	 * Get JSON Response from Wikipedia
-	 * @return JSONObject the JSONObject response
-	 */
-	private JSONObject getJSONResponse() {
-		Object response = null;
-		InputStream inputStream = null;
-		HttpURLConnection connection = null;
-		try {
-			connection = (HttpURLConnection) url.openConnection();
-			connection.addRequestProperty("Accept", "application/json");
-			inputStream = connection.getInputStream();
-			response = JSONValue.parse(new InputStreamReader(inputStream));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (inputStream != null) {
-				try {
-					inputStream.close();
-				} catch (IOException e) {}
-			}
-			if (connection != null) {
-				connection.disconnect();
-			}
-		}
-		return (JSONObject) response;
-	}
+    @Override
+    public void pollCycle() {
+        Integer numArticles = getNumArticles();
+        if (numArticles != null) {
+             reportMetric("Articles/Created", "articles/sec", articleCreationRate.process(numArticles));
+             reportMetric("Articles/Count", "articles", numArticles);
+        } else {
+            //TODO: log numArticles when null
+        }
+    }
+
+    /**
+     * Get Number of Articles from Wikipedia
+     * @return Integer the number of articles
+     */
+    private Integer getNumArticles() {
+        JSONObject jsonObj = getJSONResponse();
+        if (jsonObj != null) {
+            JSONObject query = (JSONObject) jsonObj.get("query");
+            JSONObject statistics = (JSONObject) query.get("statistics");
+            Long numArticles = (Long) statistics.get("articles");
+            return numArticles.intValue();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Get JSON Response from Wikipedia
+     * @return JSONObject the JSONObject response
+     */
+    private JSONObject getJSONResponse() {
+        Object response = null;
+        InputStream inputStream = null;
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            connection.addRequestProperty("Accept", "application/json");
+            inputStream = connection.getInputStream();
+            response = JSONValue.parse(new InputStreamReader(inputStream));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {}
+            }
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+        return (JSONObject) response;
+    }
 
 }
