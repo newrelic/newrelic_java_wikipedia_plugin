@@ -23,7 +23,7 @@ import com.newrelic.metrics.publish.processors.Processor;
 public class WikipediaAgent extends Agent {
 
     private static final String GUID = "com.newrelic.examples.wikipedia";
-    private static final String VERSION = "1.0.8";
+    private static final String VERSION = "2.0.0";
 
     private static final String HTTP = "http";
     private static final String WIKIPEDIA_URL = "/w/api.php?action=query&format=json&meta=siteinfo&siprop=statistics";

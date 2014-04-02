@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project name="wikipedia" default="dist" basedir=".">
 
-    <property name="version" value="1.0.8" />
+    <property name="version" value="2.0.0" />
     <property name="filename" value="newrelic_wikipedia_plugin-${version}"/>
-    <property name="jarfile" value="${filename}.jar" />
+    <property name="jarfile" value="plugin.jar" />
     <property name="tarfile" value="${filename}.tar.gz" />
 
     <property name="build.dir" value="build" />
@@ -17,7 +17,7 @@
     <property name="conf.dir" value="config" />
     <property name="dist.dir" location="dist" />
 
-    <property name="sdk.jar" value="${lib.dir}/metrics_publish-1.2.0.jar" />
+    <property name="sdk.jar" value="${lib.dir}/metrics_publish-2.0.0-SNAPSHOT.jar" />
 
     <path id="classpath">
         <pathelement location="${sdk.jar}" />

@@ -3,3 +3,5 @@
 build/
 META-INF/
 bin/
+config/newrelic.json
+logs/

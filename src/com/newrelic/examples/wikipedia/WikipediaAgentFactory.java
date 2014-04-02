@@ -13,14 +13,15 @@ import com.newrelic.metrics.publish.configuration.ConfigurationException;
  */
 public class WikipediaAgentFactory extends AgentFactory {
 
-	public WikipediaAgentFactory() {
-		super("com.newrelic.examples.wikipedia.json");
-	}
-
-	@Override
-	public Agent createConfiguredAgent(Map<String, Object> properties) throws ConfigurationException {
-		String name = (String) properties.get("name");
-		String host = (String) properties.get("host");
-		return new WikipediaAgent(name, host);
-	}
+    @Override
+    public Agent createConfiguredAgent(Map<String, Object> properties) throws ConfigurationException {
+        String name = (String) properties.get("name");
+        String host = (String) properties.get("host");
+        
+        if (name == null || host == null) {
+            throw new ConfigurationException("'name' and 'host' cannot be null. Do you have a 'config/plugin.json' file?");
+        }
+        
+        return new WikipediaAgent(name, host);
+    }
 }
