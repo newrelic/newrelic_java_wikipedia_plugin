@@ -17,7 +17,7 @@
     <property name="conf.dir" value="config" />
     <property name="dist.dir" location="dist" />
 
-    <property name="sdk.jar" value="${lib.dir}/metrics_publish-2.0.0-SNAPSHOT.jar" />
+    <property name="sdk.jar" value="${lib.dir}/metrics_publish-2.0.0.jar" />
 
     <path id="classpath">
         <pathelement location="${sdk.jar}" />
