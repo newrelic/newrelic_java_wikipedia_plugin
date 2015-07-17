@@ -25,7 +25,7 @@ public class WikipediaAgent extends Agent {
     private static final String GUID = "com.newrelic.examples.wikipedia";
     private static final String VERSION = "2.0.0";
 
-    private static final String HTTP = "http";
+    private static final String HTTPS = "https";
     private static final String WIKIPEDIA_URL = "/w/api.php?action=query&format=json&meta=siteinfo&siprop=statistics";
 
     private String name;
@@ -43,7 +43,7 @@ public class WikipediaAgent extends Agent {
         super(GUID, VERSION);
         try {
             this.name = name;
-            this.url = new URL(HTTP, host, WIKIPEDIA_URL);
+            this.url = new URL(HTTPS, host, WIKIPEDIA_URL);
             this.articleCreationRate = new EpochCounter();
         } catch (MalformedURLException e) {
             throw new ConfigurationException("Wikipedia metric URL could not be parsed", e);
